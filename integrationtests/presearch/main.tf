@@ -17,8 +17,6 @@ terraform {
 }
 
 provider "grid" {
-  mnemonic = "ring brand park runway cigar month yard venture else wealth surprise attract"
-  network = "dev"
 }
 
 resource "random_bytes" "mycelium_ip_seed" {
@@ -45,7 +43,7 @@ resource "grid_scheduler" "sched" {
     sru       = 5 * 1024
     mru       = 1024
     farm_id   = 1
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }

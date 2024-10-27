@@ -38,7 +38,7 @@ resource "grid_scheduler" "sched" {
     sru       = local.vm_disk_size * 1024
     mru       = local.vm_memory
     farm_id   = 1
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }

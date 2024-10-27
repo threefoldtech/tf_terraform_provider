@@ -18,7 +18,7 @@ resource "grid_scheduler" "scheduler" {
   requests {
     name      = "node"
     hru       = 10 * 1024
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }

@@ -30,7 +30,7 @@ resource "grid_scheduler" "scheduler" {
     cru       = 2
     sru       = local.vm_disk_size * 1024
     mru       = local.vm_memory
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }

@@ -28,7 +28,7 @@ resource "grid_scheduler" "scheduler" {
     mru              = 1024
     public_config    = true
     public_ips_count = 1
-    yggdrasil        = true
+    yggdrasil        = false
     wireguard        = false
   }
 }

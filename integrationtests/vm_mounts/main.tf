@@ -40,7 +40,7 @@ resource "grid_scheduler" "scheduler" {
     cru       = 1
     sru       = var.disk_size * 1024 + 1024
     mru       = 1024
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }
