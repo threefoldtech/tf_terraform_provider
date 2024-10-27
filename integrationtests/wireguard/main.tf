@@ -15,13 +15,21 @@ terraform {
 provider "grid" {
 }
 
+resource "random_bytes" "mycelium_ip_seed" {
+  length = 6
+}
+
+resource "random_bytes" "mycelium_key" {
+  length = 32
+}
+
 resource "grid_scheduler" "scheduler" {
   requests {
     name      = "node"
     cru       = 2
     sru       = 1024
     mru       = 1024
-    yggdrasil = true
+    yggdrasil = false
     wireguard = true
   }
 }
@@ -31,6 +39,9 @@ resource "grid_network" "net1" {
   ip_range      = "10.1.0.0/16"
   name          = "network"
   description   = "wirequard network"
+  mycelium_keys = {
+    format("%s", grid_scheduler.scheduler.nodes["node"]) = random_bytes.mycelium_key.hex
+  }
   add_wg_access = true
 }
 
@@ -47,6 +58,7 @@ resource "grid_deployment" "d1" {
     env_vars = {
       SSH_KEY = "${var.public_key}"
     }
+    mycelium_ip_seed = random_bytes.mycelium_ip_seed.hex
   }
   vms {
     name       = "anothervm"
@@ -57,6 +69,7 @@ resource "grid_deployment" "d1" {
     env_vars = {
       SSH_KEY = "${var.public_key}"
     }
+    mycelium_ip_seed = random_bytes.mycelium_ip_seed.hex
   }
 }
 

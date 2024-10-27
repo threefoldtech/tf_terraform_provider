@@ -19,6 +19,14 @@ terraform {
 provider "grid" {
 }
 
+resource "random_bytes" "mycelium_ip_seed" {
+  length = 6
+}
+
+resource "random_bytes" "mycelium_key" {
+  length = 32
+}
+
 resource "random_string" "name" {
   length  = 8
   special = false
@@ -35,7 +43,7 @@ resource "grid_scheduler" "sched" {
     sru       = 5 * 1024
     mru       = 1024
     farm_id   = 1
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }
@@ -45,6 +53,9 @@ resource "grid_network" "net1" {
   name          = random_string.name.result
   nodes         = [grid_scheduler.sched.nodes["presearch"]]
   ip_range      = "10.1.0.0/16"
+  mycelium_keys = {
+    format("%s", grid_scheduler.sched.nodes["presearch"]) = random_bytes.mycelium_key.hex
+  }
   description   = "presearch network"
 }
 
@@ -65,7 +76,7 @@ resource "grid_deployment" "d1" {
     name       = random_string.name.result
     flist      = "https://hub.grid.tf/tf-official-apps/presearch-v2.2.flist"
     entrypoint = "/sbin/zinit init"
-    planetary  = true
+    mycelium_ip_seed = random_bytes.mycelium_ip_seed.hex
     cpu        = 1
     memory     = 1024
 
@@ -82,6 +93,6 @@ resource "grid_deployment" "d1" {
   }
 }
 
-output "ygg_ip" {
-  value = grid_deployment.d1.vms[0].planetary_ip
+output "mycelium_ip" {
+  value = grid_deployment.d1.vms[0].mycelium_ip
 }

@@ -11,7 +11,6 @@ terraform {
     }
   }
 }
-
 provider "grid" {
 }
 
@@ -26,6 +25,22 @@ resource "random_string" "name" {
   length  = 8
   special = false
 }
+resource "random_bytes" "master_mycelium_ip_seed" {
+  length = 6
+}
+
+resource "random_bytes" "worker_mycelium_ip_seed" {
+  length = 6
+}
+
+resource "random_bytes" "master_mycelium_key" {
+  length = 32
+}
+
+resource "random_bytes" "worker_mycelium_key" {
+  length = 32
+}
+
 
 resource "grid_scheduler" "sched" {
   requests {
@@ -35,7 +50,7 @@ resource "grid_scheduler" "sched" {
     mru       = local.master_memory
     distinct  = true
     farm_id   = 1
-    yggdrasil = true
+    yggdrasil = false
     wireguard = true
   }
 
@@ -45,7 +60,7 @@ resource "grid_scheduler" "sched" {
     sru       = local.worker_disk_size * 1024
     mru       = local.worker_memory
     distinct  = true
-    yggdrasil = true
+    yggdrasil = false
     wireguard = true
   }
 }
@@ -56,6 +71,10 @@ resource "grid_network" "net1" {
   name          = random_string.name.result
   description   = "kubernetes network"
   add_wg_access = true
+  mycelium_keys = { 
+    format("%s",grid_scheduler.sched.nodes["node1"]) = random_bytes.master_mycelium_key.hex
+    format("%s",grid_scheduler.sched.nodes["node2"])= random_bytes.worker_mycelium_key.hex
+  }
 }
 
 resource "grid_kubernetes" "k8s1" {
@@ -69,7 +88,7 @@ resource "grid_kubernetes" "k8s1" {
     name      = "mr"
     cpu       = 2
     memory    = local.master_memory
-    planetary = true
+    mycelium_ip_seed = random_bytes.master_mycelium_ip_seed.hex
   }
   workers {
     disk_size = local.worker_disk_size
@@ -77,18 +96,18 @@ resource "grid_kubernetes" "k8s1" {
     name      = "w0"
     cpu       = 2
     memory    = local.worker_memory
-    planetary = true
+    mycelium_ip_seed = random_bytes.worker_mycelium_ip_seed.hex
   }
 }
 
-output "mr_ygg_ip" {
-  value = grid_kubernetes.k8s1.master[0].planetary_ip
+output "master_mycelium_ip" {
+  value = grid_kubernetes.k8s1.master[0].mycelium_ip
 }
 
 output "wg_config" {
   value = grid_network.net1.access_wg_config
 }
 
-output "worker_ygg_ip" {
-  value = grid_kubernetes.k8s1.workers[0].planetary_ip
+output "worker_mycelium_ip" {
+  value = grid_kubernetes.k8s1.workers[0].mycelium_ip
 }

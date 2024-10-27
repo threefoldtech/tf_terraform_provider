@@ -18,7 +18,7 @@ resource "grid_scheduler" "scheduler" {
   requests {
     name      = "node"
     hru       = 10 * 1024
-    yggdrasil = true
+    yggdrasil = false
     wireguard = false
   }
 }
@@ -45,7 +45,7 @@ output "deployment_id" {
 }
 
 output "zdb1_endpoint" {
-  value = format("[%s]:%d", grid_deployment.d1.zdbs[0].ips[1], grid_deployment.d1.zdbs[0].port)
+  value = format("[%s]:%d", grid_deployment.d1.zdbs[0].ips[2], grid_deployment.d1.zdbs[0].port)
 }
 
 output "zdb1_namespace" {
