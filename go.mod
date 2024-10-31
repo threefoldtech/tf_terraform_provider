@@ -11,9 +11,9 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
-	github.com/threefoldtech/tfgrid-sdk-go/grid-client v0.15.19-0.20241023120104-10e7b39086e4
-	github.com/threefoldtech/tfgrid-sdk-go/grid-proxy v0.15.18
-	github.com/threefoldtech/tfgrid-sdk-go/rmb-sdk-go v0.15.18
+	github.com/threefoldtech/tfgrid-sdk-go/grid-client v0.16.0
+	github.com/threefoldtech/tfgrid-sdk-go/grid-proxy v0.16.0
+	github.com/threefoldtech/tfgrid-sdk-go/rmb-sdk-go v0.16.0
 	github.com/threefoldtech/zos v0.5.6-0.20240902110349-172a0a29a6ee
 	golang.org/x/crypto v0.28.0
 	golang.org/x/sync v0.8.0
@@ -42,6 +42,7 @@ require (
 	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
+	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/centrifuge/go-substrate-rpc-client/v4 v4.0.12 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/cosmos/go-bip39 v1.0.0 // indirect
@@ -118,7 +119,7 @@ require (
 	github.com/rs/zerolog v1.33.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	github.com/threefoldtech/tfchain/clients/tfchain-client-go v0.0.0-20240827163226-d4e15e206974 // indirect
+	github.com/threefoldtech/tfchain/clients/tfchain-client-go v0.0.0-20241007205731-5e76664a3cc4 // indirect
 	github.com/threefoldtech/zos4 v0.5.6-0.20241008102757-02d898c580c4 // indirect
 	github.com/tmccombs/hcl2json v0.3.3 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
