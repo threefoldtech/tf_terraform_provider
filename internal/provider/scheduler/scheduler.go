@@ -5,8 +5,10 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
+	"slices"
 
 	"github.com/pkg/errors"
+	"github.com/threefoldtech/tfgrid-sdk-go/grid-client/zos"
 	proxy "github.com/threefoldtech/tfgrid-sdk-go/grid-proxy/pkg/client"
 	proxyTypes "github.com/threefoldtech/tfgrid-sdk-go/grid-proxy/pkg/types"
 )
@@ -162,8 +164,12 @@ func (n *Scheduler) gridProxySchedule(ctx context.Context, r *Request) (uint32, 
 		if err != nil {
 			return 0, errors.Wrap(err, "couldn't list nodes from the grid proxy")
 		}
-		if len(nodes) == 0 {
+		if len(nodes) == 0 && slices.Contains(f.Features, zos.NetworkType) {
 			return 0, NoNodesFoundErr
+		}
+		if len(nodes) == 0 {
+			f.Features = []string{zos.NetworkType, zos.ZMachineType}
+			continue
 		}
 		n.addNodes(nodes)
 		node = n.getNode(ctx, r)
