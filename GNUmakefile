@@ -29,7 +29,7 @@ integration: clean build-dev
 tests: unittests integrationtests
 
 clean:
-	rm -rf $(GARBAGE)
+	rm -f $(GARBAGE)
 
 lint:
 	@echo "Running $@"
