@@ -7,8 +7,8 @@ A terraform provider for the [threefold grid](https://threefold.io) to manage yo
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.x
-- [Go](https://golang.org/doc/install) >= 1.15
-- [Gettting started document](https://library.threefold.me/info/manual/#/manual3_iac/grid3_terraform/manual__grid3_terraform_home)
+- [Go](https://golang.org/doc/install) >= 1.21
+- [Gettting started document](https://manual.grid.tf/documentation/system_administrators/terraform/terraform_readme.html#get-started)
 
 ## Using provider for different environments
 
@@ -55,7 +55,7 @@ terraform init && terraform apply # creates resources defined in main.tf
 terraform destroy # destroy the created resource
 ```
 
-- For a tutorials, please visit the [wiki](https://library.threefold.me/info/manual/#/manual3_iac/grid3_terraform/manual__grid3_terraform_home) page.
+- For a tutorials, please visit the [wiki](https://manual.grid.tf/documentation/system_administrators/terraform/terraform_readme.html#get-started) page.
 - Detailed docs for resources and their arguments can be found in the [docs](docs).
 
 ## Building The Provider (for development only)
